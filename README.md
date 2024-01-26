@@ -24,6 +24,12 @@ Developed and Tested for:
 sudo apt update && sudo apt upgrade
 sudo apt install bzip2 default-jdk default-jre xsltproc libxml2-utils python3-pip python3.10-venv
 ```
+For macOS, use Homebrew package management system
+```bash
+brew update
+brew upgrade # if needed
+```
+
 Verify java installation
 
 ```bash
@@ -31,10 +37,29 @@ java -version
 ```
 > openjdk version "11.0.21" 2023-10-17
 
+The macOS has its legacy Java, and it is possible that your macOS is not using openjdk. You can install it and read the output for next steps (e.g., setting symlink and path)
+```bash
+brew install openjdk
+brew info openjdk
+```
+Symlink
+```bash
+sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+```
+Set path
+```bash
+echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' >> ~/.zshrc
+```
+
 ### 1. Download the current source and rendering pipeline from dicom.nema.org using curl (wget or another method will also work)
 
 ```bash
 curl https://dicom.nema.org/medical/dicom/current/DocBookDICOM2023e_sourceandrenderingpipeline_20231120022735.tar.bz2 --output sourceandrenderingpipeline.tar.bz2
+```
+
+This link is removed from the webpage. Use the new released version.
+```bash
+curl https://dicom.nema.org/medical/dicom/current/DocBookDICOM2024a_sourceandrenderingpipeline_20240120075929.tar.bz2 --output sourceandrenderingpipeline.tar.bz2
 ```
 
 ### 2. Extract to a directory, remove archive, and navigate to the directory
@@ -53,6 +78,11 @@ cd sourceandrenderingpipeline
 
 ```bash
 ./updateabsolutepaths.sh
+```
+
+If you get an error message that gsed: command not found, then install gsed package first and run it again.
+```bash
+brew install gnu-sed
 ```
 
 ### 4. Generate the databases for the parts (example for part 16)
@@ -76,7 +106,13 @@ curl https://repo1.maven.org/maven2/org/glassfish/javax.json/1.0.4/javax.json-1.
 ```bash
 cp extractvaluesets.sh{,.old}
 sed -i 's|${HOME}/work/pixelmed/imgbook/lib/additional/|./|g' extractvaluesets.sh
+./extractvaluesets.sh
+```
 
+For macOS, `-i` syntax needs explicit argument specifying the extension for backup files.
+```bash
+cp extractvaluesets.sh{,.old}
+sed -i.bak 's|${HOME}/work/pixelmed/imgbook/lib/additional/|./|g' extractvaluesets.sh
 ./extractvaluesets.sh
 ```
 
