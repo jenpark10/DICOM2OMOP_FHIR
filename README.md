@@ -54,11 +54,6 @@ echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' >> ~/.zshrc
 ### 1. Download the current source and rendering pipeline from dicom.nema.org using curl (wget or another method will also work)
 
 ```bash
-curl https://dicom.nema.org/medical/dicom/current/DocBookDICOM2023e_sourceandrenderingpipeline_20231120022735.tar.bz2 --output sourceandrenderingpipeline.tar.bz2
-```
-
-This link is removed from the webpage. Use the new released version.
-```bash
 curl https://dicom.nema.org/medical/dicom/current/DocBookDICOM2024a_sourceandrenderingpipeline_20240120075929.tar.bz2 --output sourceandrenderingpipeline.tar.bz2
 ```
 
@@ -85,12 +80,12 @@ If you get an error message that gsed: command not found, then install gsed pack
 brew install gnu-sed
 ```
 
-### 4. Generate the databases for the parts (example for part 16)
+### 4. Generate the databases for the parts (example for part 16, 3)
 
 ```bash
 ./generateolinkdb.sh 16
+./generateolinkdb.sh 03
 ```
-
 ### 5. Generate FHIR valuesets
 
 #### 5.1 Navigate to the valuesets subdirectory and download Java package dependencies
@@ -139,7 +134,7 @@ pip install -r requirements.txt
 ```
 
 ```bash
-python DICOM_P16_harvest_fhir_json.py
+python DICOM_P16_harvest_json.py
 ```
 
 
