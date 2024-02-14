@@ -118,8 +118,6 @@ find ./valuesets/fhir/json/ -type f -name "*.json" | wc -l
 ```
 >1341
 
-
-
 ### 6. Setup the Python virtual environment
 
 > note: this should be done in the root DICOM2OMOP directory. We use `cd ../..` here to navigate there from `DICOM2OMOP/sourceandrenderingpipeline/valuesets`
@@ -136,7 +134,6 @@ pip install -r requirements.txt
 ```bash
 python DICOM_P16_harvest_json.py
 ```
-
 
 ## References
 
